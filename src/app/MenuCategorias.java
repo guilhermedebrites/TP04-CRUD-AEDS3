@@ -62,41 +62,37 @@ public class MenuCategorias extends Principal {
     }
 
     private static Categoria ler_Categoria() {
-        String nome = "";
-        boolean dadosCompletos = false;
-        do {
-            System.out.print("\nNome da categoria: ");
-            nome = console.nextLine();
+        System.out.print("Nome da Categoria: ");
+        String nome = console.nextLine();
 
-            if (nome.length() >= 5 || nome.length() == 0) {
-                dadosCompletos = true;
-            } else {
-                System.err.println("Erro: Nome da categoria inválido.");
-            }
-        } while (dadosCompletos == false);
-
-        return (new Categoria(0, nome));
+        if (!nome.isEmpty()) {
+            Categoria categoria = new Categoria();
+            categoria.setNome(nome);
+            return categoria;
+        } else {
+            System.out.println("Nome inválido. Operação cancelada!");
+            return null;
+        }
     }
 
     public static void incluirCategoria() {
-        System.out.println("\n> Incluir:");
+        System.out.println("\n> Incluir Categoria:");
 
-        Categoria novaCategoria = ler_Categoria();
+        try {
+            Categoria novaCategoria = ler_Categoria();
 
-        if (novaCategoria != null && novaCategoria.getNome().length() > 0) {
-            System.out.println("Confirma a inclusão? (S/N)");
-            char resp = console.nextLine().charAt(0);
-
-            if (resp == 'S' || resp == 's') {
-                try {
-                    arqCategorias.create(novaCategoria);
-                    System.out.println("Categoria criada.");
-                } catch (Exception e) {
-                    System.out.println("Erro do sistema. Não foi possível criar a categoria!");
+            if (novaCategoria != null && !novaCategoria.getNome().isEmpty()) {
+                int id = arqCategorias.create(novaCategoria);
+                if (id > 0) {
+                    System.out.println("Categoria incluída com sucesso. ID: " + id);
+                } else {
+                    System.out.println("Não foi possível incluir a categoria.");
                 }
+            } else {
+                System.out.println("Operação cancelada!");
             }
-        } else {
-            System.out.println("Operação cancelada!");
+        } catch (Exception e) {
+            System.err.println("Não foi possível incluir a categoria!");
         }
     }
 

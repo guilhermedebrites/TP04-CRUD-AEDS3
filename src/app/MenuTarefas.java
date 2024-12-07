@@ -263,25 +263,20 @@ public class MenuTarefas extends Principal {
             } else {
                 MenuTarefas.listarTarefas(arqTarefas);
 
-                System.out.print("ID da Tarefa: ");
+                System.out.print("Número da Tarefa: ");
                 String input = console.nextLine();
 
-                if (input.length() > 0) {
-                    Tarefa tarefaEncontrada = null;
-                    boolean encontrada = false;
-                    int tam = lista.size();
-                    int id = Integer.parseInt(input);
-                    for (int i = 0; i < tam && !encontrada; i++) {
-                        if (lista.get(i).getId() == id) {
-                            tarefaEncontrada = lista.get(i);
-                            encontrada = true;
+                if (!input.isEmpty()) {
+                    try {
+                        int posicao = Integer.parseInt(input) - 1; // Convert to zero-based index
+                        if (posicao >= 0 && posicao < lista.size()) {
+                            Tarefa tarefaEncontrada = lista.get(posicao);
+                            System.out.println(tarefaEncontrada);
+                        } else {
+                            System.out.println("Número inválido!");
                         }
-                    }
-
-                    if (tarefaEncontrada != null) {
-                        System.out.println(tarefaEncontrada);
-                    } else {
-                        System.out.println("Tarefa não encontrada.");
+                    } catch (NumberFormatException e) {
+                        System.out.println("Insira um número válido.");
                     }
                 } else {
                     System.out.println("Operação cancelada!");
