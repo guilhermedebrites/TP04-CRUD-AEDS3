@@ -19,11 +19,13 @@ public class MenuTarefas extends Principal {
     private static ArquivoTarefa arqTarefas;
     private static ArquivoCategoria arqCategorias;
     private static ArquivoRotulo arqRotulos;
+    private static TarefaIndex index;
 
     public MenuTarefas() throws Exception {
         arqTarefas = new ArquivoTarefa();
         arqCategorias = new ArquivoCategoria();
         arqRotulos = new ArquivoRotulo();
+        index = new TarefaIndex(10, "dicionario.db", "blocos.db");
     }
 
     public static void menu() {
@@ -239,6 +241,7 @@ public class MenuTarefas extends Principal {
                 if (resp == 'S' || resp == 's') {
                     try {
                         arqTarefas.create(novaTarefa);
+                        index.inserirTarefa(novaTarefa.getId(), novaTarefa.getName());
                         System.out.println("Tarefa incluída com sucesso!");
                     } catch (Exception e) {
                         System.out.println("Não foi possível criar a tarefa!");
@@ -321,6 +324,8 @@ public class MenuTarefas extends Principal {
                         if (novaTarefa != null && !novaTarefa.getName().isEmpty()) {
                             novaTarefa.setId(tarefaEncontrada.getId());
                             arqTarefas.update(novaTarefa);
+                            index.excluirTarefa(tarefaEncontrada.getId(), tarefaEncontrada.getName());
+                            index.inserirTarefa(novaTarefa.getId(), novaTarefa.getName());
                             System.out.println("Tarefa alterada.");
                         } else {
                             System.out.println("Operação cancelada!");
@@ -369,6 +374,7 @@ public class MenuTarefas extends Principal {
                                 boolean sucesso = arqTarefas.delete(tarefaEncontrada.getId());
 
                                 if (sucesso) {
+                                    index.excluirTarefa(tarefaEncontrada.getId(), tarefaEncontrada.getName());
                                     System.out.println("Tarefa excluída.");
                                 } else {
                                     System.out.println("Erro: Não foi possível excluir a tarefa.");
@@ -468,11 +474,11 @@ public class MenuTarefas extends Principal {
         System.out.println("\n> Buscar Tarefa por Palavra:");
 
         try {
-            TarefaIndex index = new TarefaIndex(10, "dicionario.db", "blocos.db");
+            //TarefaIndex index = new TarefaIndex(10, "dicionario.db", "blocos.db");
             List<Tarefa> tarefas = arqTarefas.readAll();
-            for(int i = 0; i < tarefas.size(); i++) {
+            /*for(int i = 0; i < tarefas.size(); i++) {
                 index.inserirTarefa(tarefas.get(i).getId(), tarefas.get(i).getName());
-            }
+            }*/
             if (index.isEmpty() == true) {
                 System.out.println("Não há tarefas cadastradas!");
             } else {
