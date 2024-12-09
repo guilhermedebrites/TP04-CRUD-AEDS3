@@ -72,9 +72,12 @@ A compressão LZW integrada ao sistema mostrou-se eficaz na redução do espaço
 
 ---
 
-## **Pontos fortes**
-- Modularidade: Cada classe tem um propósito claro e coeso.
-- Eficiência: Compressão LZW reduz o uso de espaço.
-- Escalabilidade: Suporte para múltiplos backups e arquivos grandes.
+Há uma rotina de compactação usando o algoritmo LZW para fazer backup dos arquivos? SIM
+Há uma rotina de descompactação usando o algoritmo LZW para recuperação dos arquivos? SIM
+O usuário pode escolher a versão a recuperar? SIM
+Qual foi a taxa de compressão alcançada por esse backup? (Compare o tamanho dos arquivos compactados com os arquivos originais)
+O trabalho está funcionando corretamente? SIM
+O trabalho está completo? SIM
+O trabalho é original e não a cópia de um trabalho de um colega? SIM
 
 ---
